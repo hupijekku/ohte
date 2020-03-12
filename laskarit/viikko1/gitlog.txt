@@ -1,0 +1,104 @@
+commit 1e454f4eed1e1a3cc0fe4687de85eca9c39c2cbc
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 19:06:22 2020 +0000
+
+    remove1, rename2
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit fafc9c89941c10fd895129c75f68aea4edcffe00
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 19:04:21 2020 +0000
+
+    files
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit a56dee82886bea1d325c803df7ed80a22db00e68
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 19:00:53 2020 +0000
+
+    lisää muutoksia
+
+ eka.txt    | 5 ++---
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 37f838e61f42dbc9e6b3ba2d2e31ac6715e0fbfb
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:59:21 2020 +0000
+
+    Muutettiin nimi
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 70989b891c9fa40f70ca828a3da2b819bab5fd05
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:58:42 2020 +0000
+
+    Poistettiin toinen
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 29776d5ccfbecb0c3c35edaba23c88f141252df8
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:57:00 2020 +0000
+
+    Poistettiin osa ja lisättiin hieman
+
+ tiedosto.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 8c66f69be02455a330b0c9770c375622297e7146
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:55:50 2020 +0000
+
+    Paljon tekstiä
+
+ tiedosto.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 62a8182ca3be0245efe0ed9b3d6cc8c6244cb658
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:49:21 2020 +0000
+
+    hakemisto ja lisäys
+
+ "stuff/nelj\303\244s.txt" | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 4e5a9c4cec88e50f1202e84bab82e080ade5f900
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:48:53 2020 +0000
+
+    muutos ja lisäys 2
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 8d5d9d724f6ee171eafbc7b2f4e0c9ab9667316a
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:47:48 2020 +0000
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 8dfd85a8be82207808e102d6a27c249eab432aad
+Author: Eemeli Saarinen <saarineneemelia@gmail.com>
+Date:   Thu Mar 12 18:47:02 2020 +0000
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)

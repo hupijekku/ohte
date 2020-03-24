@@ -12,4 +12,5 @@ Tehtävät
 ### Viikko 2
 
 [vaatimusmaarittely.md](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/vaatimusmaarittely.md)  
+[tuntikirjanpito.md](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/tuntikirjanpito.md)  
 

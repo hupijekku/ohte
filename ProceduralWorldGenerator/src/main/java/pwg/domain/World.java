@@ -20,4 +20,30 @@ public class World {
         this.size = size;
         this.tilemap = new Tile[size][size];
     }
+    
+    public World(WorldType type, int size, Tile[][] tilemap) {
+        this.type = type;
+        this.size = size;
+        this.tilemap = tilemap;
+    }
+    
+    public Tile[][] getTiles() {
+        return this.tilemap;
+    }
+    
+    public Tile getTileAt(int x, int y) {
+        if(x < this.size && y < this.size) {
+            return this.tilemap[x][y];
+        } else {
+            return null;
+        }
+    }
+    
+    public int getSize() {
+        return this.size;
+    }
+    
+    public WorldType getType() {
+        return this.type;
+    }
 }

@@ -31,6 +31,6 @@ public class WorldGenerator {
                 tilemap[x][y] = new Tile();
             }
         }
-        return new World();
+        return new World(type, size, tilemap);
     }
 }

@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -26,6 +27,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.stage.Stage;
 
+import pwg.domain.WorldType;
+import pwg.domain.WorldGenerator;
 
 public class PwgUi extends Application {
         
@@ -45,12 +48,17 @@ public class PwgUi extends Application {
         StackPane root = new StackPane();
         BorderPane menu = new BorderPane();
         VBox menuLayout = new VBox(1);
-        HBox menuItem_setWorldSize = new HBox(2);
+        HBox menuItem_worldSize = new HBox(2);
+        HBox menuItem_worldType = new HBox(2);
         HBox menuItem_generateButton = new HBox(1);
         Canvas canvas = new Canvas(canvasSize, canvasSize);
         
         //  Control
         Label lbl_worldSize = new Label("World size:");
+        Label lbl_worldType = new Label("World type:");
+        ComboBox<WorldType> cb_worldType = new ComboBox();
+        cb_worldType.getItems().setAll(WorldType.values());
+        cb_worldType.setValue(WorldType.WORLD);
         TextField tf_worldSize = new TextField();
         Button btn_generateWorld = new Button("Generate World");
         
@@ -59,25 +67,29 @@ public class PwgUi extends Application {
         Insets padding = new Insets(10, 10, 10, 10);
         menuLayout.setPadding(padding);
         menuLayout.setSpacing(10);
-        menuItem_setWorldSize.setPadding(padding);
-        menuItem_setWorldSize.setSpacing(10);
+        menuItem_worldSize.setPadding(padding);
+        menuItem_worldSize.setSpacing(10);
+        menuItem_worldType.setPadding(padding);
+        menuItem_worldType.setSpacing(10);
         menu.setCenter(canvas);
         menu.setRight(menuLayout);
         menuItem_generateButton.setAlignment(Pos.CENTER);
         
         
         // Setting hierarchy
-        menuItem_setWorldSize.getChildren().add(lbl_worldSize);
-        menuItem_setWorldSize.getChildren().add(tf_worldSize);
+        menuItem_worldSize.getChildren().add(lbl_worldSize);
+        menuItem_worldSize.getChildren().add(tf_worldSize);
+        menuItem_worldType.getChildren().add(lbl_worldType);
+        menuItem_worldType.getChildren().add(cb_worldType);
         menuItem_generateButton.getChildren().add(btn_generateWorld);
-        menuLayout.getChildren().add(menuItem_setWorldSize);
+        menuLayout.getChildren().add(menuItem_worldSize);
+        menuLayout.getChildren().add(menuItem_worldType);
         menuLayout.getChildren().add(menuItem_generateButton);
         root.getChildren().add(menu);
         
         
         // Drawing a base grid (Temporary)
         WorldDrawer drawer = new WorldDrawer(canvas.getGraphicsContext2D());
-        
         btn_generateWorld.setOnAction(event->{
             int worldSize = 0;
             try {
@@ -90,6 +102,7 @@ public class PwgUi extends Application {
                 errorBox("Invalid size", "World size must be between 0 and 100");
             }
             else {
+                WorldGenerator generator = new WorldGenerator(cb_worldType.getValue(), worldSize);
                 drawer.drawGrid(worldSize, canvasSize);
             }
         });

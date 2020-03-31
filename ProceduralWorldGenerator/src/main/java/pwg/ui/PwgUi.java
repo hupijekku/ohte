@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 
 import pwg.domain.WorldType;
 import pwg.domain.WorldGenerator;
+import pwg.domain.World;
 
 public class PwgUi extends Application {
         
@@ -102,8 +103,10 @@ public class PwgUi extends Application {
                 errorBox("Invalid size", "World size must be between 0 and 100");
             }
             else {
-                WorldGenerator generator = new WorldGenerator(cb_worldType.getValue(), worldSize);
+                WorldGenerator generator = new WorldGenerator();
+                World world = generator.generate(cb_worldType.getValue(), worldSize);
                 drawer.drawGrid(worldSize, canvasSize);
+                // TODO: drawer.drawWorld(world);
             }
         });
         

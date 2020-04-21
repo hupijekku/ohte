@@ -9,6 +9,7 @@ The application generates a 2d grid map generated with user defined variables th
 ## Documentation  
 [System Requirement Specification (SRS)](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/vaatimusmaarittely.md)  
 [Record of work hours](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/tuntikirjanpito.md)  
+[Architecture](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/arkkitehtuuri.md)  
 
 ## Releaset
 [Viikko 5](https://github.com/hupijekku/ohte/releases/tag/viikko5)  

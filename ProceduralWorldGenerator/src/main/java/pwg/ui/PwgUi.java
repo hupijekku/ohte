@@ -20,9 +20,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.stage.Stage;
@@ -49,72 +51,126 @@ public class PwgUi extends Application {
         StackPane root = new StackPane();
         BorderPane menu = new BorderPane();
         VBox menuLayout = new VBox(1);
-        HBox menuItem_worldSize = new HBox(2);
-        HBox menuItem_worldType = new HBox(2);
-        HBox menuItem_generateButton = new HBox(1);
+        HBox menuItemWorldSize = new HBox(2);
+        HBox menuItemWorldType = new HBox(2);
+        HBox menuItemGenerateButton = new HBox(1);
+        HBox menuItemHumiditySlider = new HBox(2);
+        HBox menuItemMountainousnessSlider = new HBox(2);
+        HBox menuItemVegetationSlider = new HBox(2);
         Canvas canvas = new Canvas(canvasSize, canvasSize);
         
         //  Control
-        Label lbl_worldSize = new Label("World size:");
-        Label lbl_worldType = new Label("World type:");
-        ComboBox<WorldType> cb_worldType = new ComboBox();
-        cb_worldType.getItems().setAll(WorldType.values());
-        cb_worldType.setValue(WorldType.WORLD);
-        TextField tf_worldSize = new TextField();
-        Button btn_generateWorld = new Button("Generate World");
+        Label lblWorldSize = new Label("World size:");
+        Label lblWorldType = new Label("World type:");
+        Label lblWorldHumidity = new Label("Humidity:");
+        Label lblWorldMountainousness = new Label("Mountainousness:");
+        Label lblWorldVegetation = new Label("Vegetation:");
+        ComboBox<WorldType> cbWorldType = new ComboBox();
+        cbWorldType.getItems().setAll(WorldType.values());
+        cbWorldType.setValue(WorldType.WORLD);
+        TextField tfWorldSize = new TextField();
+        Button btnGenerateWorld = new Button("Generate World");
+        Slider sldHumidity = new Slider();
+        Slider sldMountainousness = new Slider();
+        Slider sldVegetation = new Slider();
         
+        // Sliders
+        sldHumidity.setMin(0);
+        sldHumidity.setMax(100);
+        sldHumidity.setValue(50);
+        sldHumidity.setShowTickLabels(true);
+        sldHumidity.setShowTickMarks(true);
+        sldHumidity.setMinorTickCount(5);
+        sldHumidity.setMajorTickUnit(50);
         
-        // Tweaking alignment
-        Insets padding = new Insets(10, 10, 10, 10);
-        menuLayout.setPadding(padding);
-        menuLayout.setSpacing(10);
-        menuItem_worldSize.setPadding(padding);
-        menuItem_worldSize.setSpacing(10);
-        menuItem_worldType.setPadding(padding);
-        menuItem_worldType.setSpacing(10);
-        menu.setCenter(canvas);
-        menu.setRight(menuLayout);
-        menuItem_generateButton.setAlignment(Pos.CENTER);
+        sldMountainousness.setMin(0);
+        sldMountainousness.setMax(100);
+        sldMountainousness.setValue(50);
+        sldMountainousness.setShowTickLabels(true);
+        sldMountainousness.setShowTickMarks(true);
+        sldMountainousness.setMinorTickCount(5);
+        sldMountainousness.setMajorTickUnit(50);
+        
+        sldVegetation.setMin(0);
+        sldVegetation.setMax(100);
+        sldVegetation.setValue(50);
+        sldVegetation.setShowTickLabels(true);
+        sldVegetation.setShowTickMarks(true);
+        sldVegetation.setMinorTickCount(5);
+        sldVegetation.setMajorTickUnit(50);
         
         
         // Setting hierarchy
-        menuItem_worldSize.getChildren().add(lbl_worldSize);
-        menuItem_worldSize.getChildren().add(tf_worldSize);
-        menuItem_worldType.getChildren().add(lbl_worldType);
-        menuItem_worldType.getChildren().add(cb_worldType);
-        menuItem_generateButton.getChildren().add(btn_generateWorld);
-        menuLayout.getChildren().add(menuItem_worldSize);
-        menuLayout.getChildren().add(menuItem_worldType);
-        menuLayout.getChildren().add(menuItem_generateButton);
+        menuItemWorldSize.getChildren().add(lblWorldSize);
+        menuItemWorldSize.getChildren().add(tfWorldSize);
+        menuItemWorldType.getChildren().add(lblWorldType);
+        menuItemWorldType.getChildren().add(cbWorldType);
+        menuItemHumiditySlider.getChildren().add(lblWorldHumidity);
+        menuItemMountainousnessSlider.getChildren().add(lblWorldMountainousness);
+        menuItemVegetationSlider.getChildren().add(lblWorldVegetation);
+        menuItemHumiditySlider.getChildren().add(sldHumidity);
+        menuItemMountainousnessSlider.getChildren().add(sldMountainousness);
+        menuItemVegetationSlider.getChildren().add(sldVegetation);
+        menuItemGenerateButton.getChildren().add(btnGenerateWorld);
+        menuLayout.getChildren().add(menuItemWorldSize);
+        menuLayout.getChildren().add(menuItemWorldType);
+        menuLayout.getChildren().add(menuItemHumiditySlider);
+        menuLayout.getChildren().add(menuItemMountainousnessSlider);
+        menuLayout.getChildren().add(menuItemVegetationSlider);
+        menuLayout.getChildren().add(menuItemGenerateButton);
+
         root.getChildren().add(menu);
+        
+                
+        // Tweaking alignment
+        Insets padding = new Insets(10, 10, 10, 10);
+        menuLayout.setPadding(padding);
+        menuItemWorldSize.setPadding(padding);
+        menuItemWorldType.setPadding(padding);
+        sldHumidity.setPadding(padding);
+        sldMountainousness.setPadding(padding);
+        sldVegetation.setPadding(padding);
+        menuItemWorldType.setSpacing(10);
+        menuItemWorldSize.setSpacing(10);
+        menuLayout.setSpacing(10);
+        menu.setCenter(canvas);
+        menu.setRight(menuLayout);
+        menuItemGenerateButton.setAlignment(Pos.CENTER);
+        HBox.setHgrow(sldHumidity, Priority.ALWAYS);
+        HBox.setHgrow(sldMountainousness, Priority.ALWAYS);
+        HBox.setHgrow(sldVegetation, Priority.ALWAYS);
         
         
         // Drawing a base grid (Temporary)
-        WorldDrawer drawer = new WorldDrawer(canvas.getGraphicsContext2D());
-        btn_generateWorld.setOnAction(event->{
+
+        btnGenerateWorld.setOnAction(event-> {
+            int humidity = (int)sldHumidity.getValue();
+            int mountainousness = (int)sldMountainousness.getValue();
+            int vegetation = (int)sldVegetation.getValue();
             int worldSize = 0;
             try {
-                worldSize = Integer.parseInt(tf_worldSize.getText());
-            }
-            catch (Exception ex) {
+                worldSize = Integer.parseInt(tfWorldSize.getText());
+            } catch (Exception ex) {
                 errorBox("Error parsing integer", "World size given is not an integer.");
             }
+            WorldDrawer drawer = new WorldDrawer(canvas.getGraphicsContext2D(), canvasSize);
             if (worldSize > 100 || worldSize < 0) {
                 errorBox("Invalid size", "World size must be between 0 and 100");
-            }
-            else {
+            } else {
                 WorldGenerator generator = new WorldGenerator();
-                World world = generator.generate(cb_worldType.getValue(), worldSize);
-                drawer.drawGrid(worldSize, canvasSize);
+                World world = generator.generate(cbWorldType.getValue(), worldSize, humidity, mountainousness, vegetation);
+                drawer.drawGrid(worldSize);
+                drawer.drawHeightMap(world);
+                drawer.drawWaters(world);
                 // TODO: drawer.drawWorld(world);
             }
         });
         
         
         // Initialize and show the scene
-        Scene scn_main = new Scene(root, 1024, 576);
+        Scene scnMain = new Scene(root, 1024, 576);
         
-        stage.setScene(scn_main);
+        stage.setScene(scnMain);
         stage.show();
     }
     

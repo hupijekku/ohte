@@ -6,9 +6,9 @@ package pwg.domain;
  * @author Hupijekku
  */
 public class Tile {
-    private float height;
-    private float humidity;
-    private float vegetation;
+    private double height;
+    private double humidity;
+    private double vegetation;
     
     private boolean passable;
     /* Transparency has no effect within this application, but can be useful
@@ -23,7 +23,7 @@ public class Tile {
         this.transparent = false;
     }
     
-    public Tile(float height, float humidity, float vegetation) {
+    public Tile(double height, double humidity, double vegetation) {
         this.height = height;
         this.humidity = humidity;
         this.vegetation = vegetation;
@@ -39,7 +39,7 @@ public class Tile {
         this.transparent = transparent;
     }
     
-    public Tile(float height, float humidity, float vegetation,
+    public Tile(double height, double humidity, double vegetation,
             boolean passable, boolean transparent) {
         this.height = height;
         this.humidity = humidity;
@@ -48,15 +48,15 @@ public class Tile {
         this.transparent = transparent;
     }
     
-    public float getHeight() {
+    public double getHeight() {
         return this.height;
     }
     
-    public float getHumidity() {
+    public double getHumidity() {
         return this.humidity;
     }
     
-    public float getVegetation() {
+    public double getVegetation() {
         return this.vegetation;
     }
     
@@ -66,5 +66,17 @@ public class Tile {
     
     public boolean isTransparent() {
         return this.transparent;
+    }
+    
+    public void setHeight(double height) {
+        this.height = height;
+    }
+    
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
+    
+    public void setVegetation(double vegetation) {
+        this.vegetation = vegetation;
     }
 }

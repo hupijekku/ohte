@@ -8,6 +8,9 @@ public class World {
     private WorldType type;
     private int size;
     private Tile[][] tilemap;
+    private int humidity = 0;
+    private int mountainousness = 0;
+    private int vegetation = 0;
     
     public World() {
         this.type = WorldType.WORLD;
@@ -32,7 +35,7 @@ public class World {
     }
     
     public Tile getTileAt(int x, int y) {
-        if(x < this.size && y < this.size) {
+        if (x < this.size && y < this.size) {
             return this.tilemap[x][y];
         } else {
             return null;
@@ -45,5 +48,29 @@ public class World {
     
     public WorldType getType() {
         return this.type;
+    }
+    
+    public void setHumidity(int hum) {
+        this.humidity = hum;
+    }
+    
+    public void setMountainousness(int mount) {
+        this.mountainousness = mount;
+    }
+    
+    public void setVegetation(int veg) {
+        this.vegetation = veg;
+    }
+    
+    public int getHumidity() {
+        return this.humidity;
+    }
+    
+    public int getMountainousness() {
+        return this.mountainousness;
+    }
+    
+    public int getVegetation() {
+        return this.vegetation;
     }
 }

@@ -22,7 +22,11 @@ Report can be then found at _target/site/jacoco/index.html_
 Program can be run from terminal with command  
 ```
 mvn compile exec:java -Dexec.mainClass=pwg.Main
-```  
+``` 
+Runnable .jar file can be generated with command  
+```
+mvn package
+```
 
 ### Style check  
 Checkstyle can be run with command

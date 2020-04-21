@@ -24,3 +24,9 @@ Program can be run from terminal with command
 mvn compile exec:java -Dexec.mainClass=pwg.Main
 ```  
 
+### Style check  
+Checkstyle can be run with command
+```
+mvn jxr:jxr checkstyle:checkstyle
+```
+Report can be then found at _target/site/checkstyle.html_  

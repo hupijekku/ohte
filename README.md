@@ -10,6 +10,9 @@ The application generates a 2d grid map generated with user defined variables th
 [System Requirement Specification (SRS)](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/vaatimusmaarittely.md)  
 [Record of work hours](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/tuntikirjanpito.md)  
 
+## Releaset
+[Viikko 5](https://github.com/hupijekku/ohte/releases/tag/viikko5)  
+
 ## Terminal commands  
 ### Testing
 Tests can be run with command  

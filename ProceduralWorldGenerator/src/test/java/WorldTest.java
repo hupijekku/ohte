@@ -29,7 +29,13 @@ public class WorldTest {
     public WorldTest() {
         noParams = new World();
         noTilemap = new World(WorldType.DUNGEON, 10);
-        params = new World(WorldType.TERRAIN, 10, new Tile[5][5]);
+        Tile[][] tilemap = new Tile[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                tilemap[i][j] = new Tile();
+            }
+        }
+        params = new World(WorldType.TERRAIN, 5, tilemap);
     }
     
     @BeforeClass
@@ -53,5 +59,33 @@ public class WorldTest {
         assertEquals(0, noParams.getTiles().length);
         assertEquals(WorldType.WORLD, noParams.getType());
         assertEquals(0, noParams.getSize());
+    }
+    
+    @Test
+    public void getTileAtReturnsATile() {
+        assertEquals(true, params.getTileAt(1, 1) instanceof Tile);
+    }
+    
+    @Test
+    public void getTileAtReturnsNullWhenOutOfIndex() {
+        assertEquals(null, params.getTileAt(6, 6));
+        assertEquals(null, params.getTileAt(-1, -1));
+        assertEquals(null, params.getTileAt(-1, 2));
+        assertEquals(null, params.getTileAt(2, -1));
+        assertEquals(null, params.getTileAt(0, 6));
+        assertEquals(null, params.getTileAt(6, 0));
+    }
+    
+    @Test
+    public void gettersAndSettersCorrectValues() {
+        assertEquals(0, noParams.getHumidity());
+        assertEquals(0, noParams.getMountainousness());
+        assertEquals(0, noParams.getVegetation());
+        noParams.setHumidity(10);
+        noParams.setMountainousness(10);
+        noParams.setVegetation(10);
+        assertEquals(10, noParams.getHumidity());
+        assertEquals(10, noParams.getMountainousness());
+        assertEquals(10, noParams.getVegetation());
     }
 }

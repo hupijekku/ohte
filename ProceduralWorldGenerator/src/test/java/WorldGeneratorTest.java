@@ -45,13 +45,13 @@ public class WorldGeneratorTest {
 
     @Test
     public void generationReturnsWorld() {
-        var world = worldGen.generate(WorldType.WORLD, 1);
+        var world = worldGen.generate(WorldType.WORLD, 1, 50, 50, 50);
         assertEquals(true, world instanceof World);
     }
     
     @Test
     public void generatedWorldHasTilemapOfCorrectSize() {
-        World world = worldGen.generate(WorldType.WORLD, 10);
+        World world = worldGen.generate(WorldType.WORLD, 10, 50, 50, 50);
         int size = world.getTiles().length;
         assertEquals(10, size);
     }

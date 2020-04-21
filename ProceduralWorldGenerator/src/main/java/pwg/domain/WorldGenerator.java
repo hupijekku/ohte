@@ -90,16 +90,15 @@ public class WorldGenerator {
     
     
     private double getMountainNoise(int x, int y, int worldSize) {
-        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize+20));
+        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize + 20));
         JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 1).build();
-        System.out.println(scale);
         return perlinNoise.getNoise(x / scale, y / scale);
     }
     
     private double getHumidityNoise(int x, int y, int worldSize) {
         //float scale = (float) (20-Math.sqrt(worldSize * 0.1));
-        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize+20));
+        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize + 20));
         JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 2).build();
         

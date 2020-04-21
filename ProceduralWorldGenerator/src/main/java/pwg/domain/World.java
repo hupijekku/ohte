@@ -35,7 +35,7 @@ public class World {
     }
     
     public Tile getTileAt(int x, int y) {
-        if (x < this.size && y < this.size) {
+        if (x < this.size && y < this.size && x > 0 && y > 0) {
             return this.tilemap[x][y];
         } else {
             return null;

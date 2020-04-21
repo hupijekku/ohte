@@ -14,11 +14,7 @@ The application generates a 2d grid map generated with user defined variables th
 ### Testing
 Tests can be run with command  
 ```
-mvn test
-```  
-Test coverage report can be generated with command  
-```
-mvn jacoco:report
+mvn test jacoco:report
 ```  
 Report can be then found at _target/site/jacoco/index.html_  
 

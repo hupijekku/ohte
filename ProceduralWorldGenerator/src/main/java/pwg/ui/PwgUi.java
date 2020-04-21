@@ -163,7 +163,6 @@ public class PwgUi extends Application {
                 drawer.drawGrid(worldSize);
                 drawer.drawHeightMap(world);
                 drawer.drawWaters(world);
-                // TODO: drawer.drawWorld(world);
             }
         });
         

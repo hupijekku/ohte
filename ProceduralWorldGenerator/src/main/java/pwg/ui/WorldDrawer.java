@@ -41,7 +41,9 @@ public class WorldDrawer {
     public void drawHeightMap(World world) {
         Tile[][] tilemap = world.getTiles();
         int size = world.getSize();
-        if (size <= 0) return;
+        if (size <= 0) {
+            return;
+        }
         int tileSize = canvasSize / size;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -58,7 +60,7 @@ public class WorldDrawer {
                         c = Color.GREEN;
                     } else if (height < 0.6) {
                         c = Color.DARKGREEN;
-                    } else if (height < 0.9) {
+                    } else if (height < 0.8) {
                         c = Color.DARKGRAY;
                     } else if (height < 1) {
                         c = Color.GRAY;
@@ -75,14 +77,15 @@ public class WorldDrawer {
     public void drawWaters(World world) {
         Tile[][] tilemap = world.getTiles();
         int size = world.getSize();
-        if (size <= 0) return;
+        if (size <= 0) {
+            return;
+        }
         int tileSize = canvasSize / size;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 double height = tilemap[x][y].getHeight();
                 double humidity = tilemap[x][y].getHumidity();
                 Color c = Color.BLUE;
-                System.out.println(height + " : " + humidity);
                 if (height - humidity < 0 && height < 0.4 && humidity > 0.05) {
                     gc.setFill(c);
                     gc.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);

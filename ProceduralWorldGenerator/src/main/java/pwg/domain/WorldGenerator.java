@@ -53,8 +53,8 @@ public class WorldGenerator {
         Tile[][] tilemap = world.getTiles();
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
-                double noise = getMountainNoise(x, y);
-                noise += Math.abs(noise)*(mount/100f) + (mount/100f);
+                double noise = getMountainNoise(x, y, world.getSize());
+                noise += Math.abs(noise) * (mount / 100f) + (mount / 100f);
                 
                 noise = Math.min(1, noise);
                 tilemap[x][y].setHeight(noise);
@@ -66,9 +66,9 @@ public class WorldGenerator {
         Tile[][] tilemap = world.getTiles();
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
-                double noise = getHumidityNoise(x, y);
-                noise += (humidity/100f);
-                noise *= (humidity/100f);
+                double noise = getHumidityNoise(x, y, world.getSize());
+                noise += (humidity / 100f);
+                noise *= (humidity / 100f);
                 noise = Math.min(1, Math.max(0, noise));
                 tilemap[x][y].setHumidity(noise);
             }
@@ -79,8 +79,8 @@ public class WorldGenerator {
         Tile[][] tilemap = world.getTiles();
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
-                double noise = getVegetationNoise(x, y);
-                noise += Math.abs(noise)*(vegetation/100f);
+                double noise = getVegetationNoise(x, y, world.getSize());
+                noise += Math.abs(noise) * (vegetation / 100f);
                 noise = Math.min(1, noise);
                 tilemap[x][y].setVegetation(noise);
             }
@@ -89,25 +89,28 @@ public class WorldGenerator {
     
     
     
-    private double getMountainNoise(int x, int y) {
-       int scale = 20;
+    private double getMountainNoise(int x, int y, int worldSize) {
+        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize+20));
         JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 1).build();
-        
-        return perlinNoise.getNoise((x*1f)/scale, (y*1f)/scale);
+        System.out.println(scale);
+        return perlinNoise.getNoise(x / scale, y / scale);
     }
     
-    private double getHumidityNoise(int x, int y) { 
-       JNoise perlinNoise = JNoise.newBuilder()
+    private double getHumidityNoise(int x, int y, int worldSize) {
+        //float scale = (float) (20-Math.sqrt(worldSize * 0.1));
+        float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize+20));
+        JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 2).build();
         
-        return perlinNoise.getNoise(x/30f, y/30f);
+        return perlinNoise.getNoise(x / scale, y / scale);
     }
     
-    private double getVegetationNoise(int x, int y) { 
-       JNoise perlinNoise = JNoise.newBuilder()
+    private double getVegetationNoise(int x, int y, int worldSize) {
+        float scale = (float) Math.sqrt(worldSize);
+        JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 3).build();
         
-        return perlinNoise.getNoise(x/10, y/10);
+        return perlinNoise.getNoise(x / 10, y / 10);
     }
 }

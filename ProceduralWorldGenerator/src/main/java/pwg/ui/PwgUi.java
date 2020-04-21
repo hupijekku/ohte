@@ -69,6 +69,7 @@ public class PwgUi extends Application {
         cbWorldType.getItems().setAll(WorldType.values());
         cbWorldType.setValue(WorldType.WORLD);
         TextField tfWorldSize = new TextField();
+        tfWorldSize.setText("50");
         Button btnGenerateWorld = new Button("Generate World");
         Slider sldHumidity = new Slider();
         Slider sldMountainousness = new Slider();
@@ -77,7 +78,7 @@ public class PwgUi extends Application {
         // Sliders
         sldHumidity.setMin(0);
         sldHumidity.setMax(100);
-        sldHumidity.setValue(50);
+        sldHumidity.setValue(40);
         sldHumidity.setShowTickLabels(true);
         sldHumidity.setShowTickMarks(true);
         sldHumidity.setMinorTickCount(5);
@@ -85,7 +86,7 @@ public class PwgUi extends Application {
         
         sldMountainousness.setMin(0);
         sldMountainousness.setMax(100);
-        sldMountainousness.setValue(50);
+        sldMountainousness.setValue(20);
         sldMountainousness.setShowTickLabels(true);
         sldMountainousness.setShowTickMarks(true);
         sldMountainousness.setMinorTickCount(5);
@@ -144,9 +145,9 @@ public class PwgUi extends Application {
         // Drawing a base grid (Temporary)
 
         btnGenerateWorld.setOnAction(event-> {
-            int humidity = (int)sldHumidity.getValue();
-            int mountainousness = (int)sldMountainousness.getValue();
-            int vegetation = (int)sldVegetation.getValue();
+            int humidity = (int) sldHumidity.getValue();
+            int mountainousness = (int) sldMountainousness.getValue();
+            int vegetation = (int) sldVegetation.getValue();
             int worldSize = 0;
             try {
                 worldSize = Integer.parseInt(tfWorldSize.getText());

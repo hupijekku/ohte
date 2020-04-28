@@ -7,4 +7,5 @@
 | 31.3. | 2    | Ensimmäiset JUnit testit |
 | 21.4. | 4    | Maailman generoimisen algoritmien aloitus |
 | 22.4. | 1    | Testauksen jatkaminen |
-| yht   | 12   | | 
+| 28.4. | 2    | JavaDocs ja kommentointi |
+| yht   | 14   | | 

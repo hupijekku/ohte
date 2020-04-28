@@ -38,3 +38,10 @@ Checkstyle can be run with command
 mvn jxr:jxr checkstyle:checkstyle
 ```
 Report can be then found at _target/site/checkstyle.html_  
+
+
+### JavaDocs
+JavaDocs can be generated with command 
+```
+mvn javadoc:javadoc
+```  

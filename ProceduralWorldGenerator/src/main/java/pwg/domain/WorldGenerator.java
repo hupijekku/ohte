@@ -2,6 +2,7 @@ package pwg.domain;
 
 import de.articdive.jnoise.JNoise;
 import de.articdive.jnoise.interpolation.InterpolationType;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -34,20 +35,201 @@ public class WorldGenerator {
     *@return    returns a World object that contains the generated world data.
     */
     public World generate(WorldType type, int size, int humidity, int mountainousness, int vegetation) {
+        World world;
+        if (type == WorldType.WORLD) {
+            world = generateWorld(size, humidity, mountainousness, vegetation);
+        } else {
+            world = generateDungeon(size);
+        }
+        return world;
+    }
+    
+    public World generateDungeon(int size) {
+        Tile[][] tilemap = new Tile[size][size];
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                tilemap[x][y] = new Tile(false, false);
+                tilemap[x][y].setX(x);
+                tilemap[x][y].setY(y);
+            }
+        }
+        int roomCount = 10;
+        Random rnd = new Random();
+        int iter = 0;
+        ArrayList<Room> rooms = new ArrayList();
+        while (iter < roomCount) {
+            int x = Math.abs(rnd.nextInt()) % (size - 10) + 5;
+            int y = Math.abs(rnd.nextInt()) % (size - 10) + 5;
+            int width = Math.abs(rnd.nextInt()) % 5 + 5;
+            int height = Math.abs(rnd.nextInt()) % 5 + 5;
+            Room room = new Room(x, y, width, height);
+            if (rooms.isEmpty()) {
+                rooms.add(room);
+                generateRoom(tilemap, room);
+            } else {
+                boolean valid = true;
+                for (Room r : rooms) {
+                    if (r.roomCollision(room)) {
+                        valid = false;
+                    }
+                }
+                if (valid) {
+                    rooms.add(room);
+                    generateRoom(tilemap, room);
+                } else {
+                    roomCount++;
+                    if(roomCount > 100) break;
+                }
+            }
+            System.out.print(".");
+            iter++;
+        }
+        for(int i = 0; i < rooms.size() - 1; i++) {
+            Room r1 = rooms.get(i);
+            Room r2 = rooms.get(i + 1);
+            int r = Math.abs(rnd.nextInt(2));
+            if(r == 0) {
+                generatePathX(tilemap, r1.pivotX, r1.pivotY, r2.pivotX, r2.pivotY);
+            } else {
+                generatePathY(tilemap, r1.pivotX, r1.pivotY, r2.pivotX, r2.pivotY);
+            }
+        }
+        int px1 = rooms.get(0).pivotX;
+        int px2 = rooms.get(rooms.size() - 1).pivotX;
+        int py1 = rooms.get(0).pivotY;
+        int py2 = rooms.get(rooms.size() - 1).pivotY;
+        generatePathY(tilemap, px1, py1, px2, py2);
+        generateDoors(tilemap);
+        World world = new World(WorldType.DUNGEON, size, tilemap);
+        return world;
+    }
+    
+    public void generateRoom(Tile[][] tilemap, Room r) {
+        for(int i = r.pivotX - (r.width / 2); i < r.pivotX + (r.width / 2); i++) {
+            for(int j = r.pivotY - (r.height / 2); j < r.pivotY + (r.height / 2); j++) {
+                tilemap[i][j].setPassable(true);
+                tilemap[i][j].setTransparent(true);
+            }
+        }
+    }
+    
+    public void generatePathX(Tile[][] tilemap, int x1, int y1, int x2, int y2) {
+        boolean x = false;
+        if (x1 > x2) {
+            for(int i = x2; i <= x1; i++) {
+                tilemap[i][y2].setPassable(true);
+                tilemap[i][y2].setTransparent(true);
+            }
+            x = true;
+        } else {
+            for(int i = x1; i <= x2; i++) {
+                tilemap[i][y1].setPassable(true);
+                tilemap[i][y1].setTransparent(true);
+            }
+        }
+        if (y1 > y2) {
+            for(int i = y2; i < y1; i++) {
+                if(x) {
+                    tilemap[x1][i].setPassable(true);
+                    tilemap[x1][i].setTransparent(true);
+                } else {
+                    tilemap[x2][i].setPassable(true);
+                    tilemap[x2][i].setTransparent(true);
+                }
+                
+            }
+        } else {
+            for(int i = y1; i < y2; i++) {
+                if(x) {
+                    tilemap[x1][i].setPassable(true);
+                    tilemap[x1][i].setTransparent(true);
+                } else {
+                    tilemap[x2][i].setPassable(true);
+                    tilemap[x2][i].setTransparent(true);
+                }
+            }
+        }
+    }
+    
+    public void generatePathY(Tile[][] tilemap, int x1, int y1, int x2, int y2) {
+        boolean y = false;
+        if (y1 > y2) {
+            for(int i = y2; i <= y1; i++) {
+                tilemap[x1][i].setPassable(true);
+                tilemap[x1][i].setTransparent(true);
+            }
+            y = true;
+        } else {
+            for(int i = y1; i <= y2; i++) {
+                tilemap[x2][i].setPassable(true);
+                tilemap[x2][i].setTransparent(true);
+            }
+        }
+        if (x1 > x2) {
+            for(int i = x2; i < x1; i++) {
+                if(y) {
+                    tilemap[i][y2].setPassable(true);
+                    tilemap[i][y2].setTransparent(true);
+                } else {
+                    tilemap[i][y1].setPassable(true);
+                    tilemap[i][y1].setTransparent(true);
+                }
+                
+            }
+        } else {
+            for(int i = x1; i < x2; i++) {
+                if(y) {
+                    tilemap[i][y2].setPassable(true);
+                    tilemap[i][y2].setTransparent(true);
+                } else {
+                    tilemap[i][y1].setPassable(true);
+                    tilemap[i][y1].setTransparent(true);
+                }
+            }
+        }
+    }
+    
+    public void generateDoors(Tile[][] tilemap) {
+        int size = tilemap.length;
+        Random rnd = new Random();
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                if(tilemap[i][j].isPassable()) {
+                    int count = 0;
+                    for(int x = i - 1; x <= i + 1; x++) {
+                        for(int y = j - 1; y <= j + 1; y++) {
+                            if (tilemap[x][y].isPassable()) {
+                                count++;
+                            }
+                        }
+                    }
+                    if (count == 5 && rnd.nextInt(100) < 15) {
+                        tilemap[i][j].setTransparent(false);
+                    }
+                }
+            }
+        }
+    }
+    
+    public World generateWorld(int size, int humidity, int mountainousness, int vegetation) {
         Tile[][] tilemap = new Tile[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 // WorldType = World -> Don't care about pathfinding/fow
                 tilemap[x][y] = new Tile(true, true);
+                tilemap[x][y].setX(x);
+                tilemap[x][y].setY(y);
             }
         }
-        World world = new World(type, size, tilemap);
+        World world = new World(WorldType.WORLD, size, tilemap);
         setMountainousness(world, mountainousness);
         setHumidity(world, humidity);
         setVegetation(world, vegetation);
         world.setHumidity(humidity);
         world.setMountainousness(mountainousness);
         world.setVegetation(vegetation);
+        Pathfinder pf = new Pathfinder(tilemap);
+        pf.path(0, 5, size-1, size-1);
         return world;
     }
     

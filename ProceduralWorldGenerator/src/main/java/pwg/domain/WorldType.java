@@ -6,7 +6,7 @@ package pwg.domain;
  */
 public enum WorldType {
     
-    WORLD(0), TERRAIN(1), DUNGEON(2);
+    WORLD(0), DUNGEON(2);
     
     private int id;
     

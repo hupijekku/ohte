@@ -6,6 +6,8 @@ package pwg.domain;
  * @author Hupijekku
  */
 public class Tile {
+    private int x;
+    private int y;
     private double height;
     private double humidity;
     private double vegetation;
@@ -64,8 +66,16 @@ public class Tile {
         return this.passable;
     }
     
+    public void setPassable(boolean pass) {
+        this.passable = pass;
+    }
+    
     public boolean isTransparent() {
         return this.transparent;
+    }
+    
+    public void setTransparent(boolean trans) {
+        this.transparent = trans;
     }
     
     public void setHeight(double height) {
@@ -78,5 +88,21 @@ public class Tile {
     
     public void setVegetation(double vegetation) {
         this.vegetation = vegetation;
+    }
+    
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
     }
 }

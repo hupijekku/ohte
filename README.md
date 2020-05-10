@@ -2,9 +2,9 @@ Ohjelmistotekniikka, harjoitustyö
 ======
 
 # Procedural World Generator  
-Procedural World Generator (PWG) is a Java11/JFX desktop application for procedurally generating different types of worlds, maps and dungeons. Main use cases of the application include, but are not limited to, creating maps for game development, creating battle maps for tabletop role-playing games (such as D&D) and learning about different procedural generation methods.  
+Procedural World Generator (PWG) is a Java11/JFX desktop application for procedurally generating different types of worlds and dungeons. Main use cases of the application include, but are not limited to, creating maps for game development, creating battle maps for tabletop role-playing games (such as D&D) and learning about different procedural generation methods.  
 
-The application generates a 2d grid map generated with user defined variables that can then be exported or saved into a database for later use.  
+The application generates a 2d grid map generated with user defined variables that can then be saved into a database for later use.  
 
 ## Documentation  
 [Usage guide](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/kayttoohje.md)  

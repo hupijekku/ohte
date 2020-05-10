@@ -46,7 +46,6 @@ public class WorldDrawer {
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
                 double height = Math.min(1, Math.max(tilemap[x][y].getHeight(), 0));
-                //height = Math.min(1, Math.max(height, 0));
                 double humidity = tilemap[x][y].getHumidity();
                 if (height < 0 && humidity > 0.4) {
                     // Water

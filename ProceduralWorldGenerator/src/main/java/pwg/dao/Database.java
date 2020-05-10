@@ -32,8 +32,6 @@ public class Database {
             s.execute("CREATE TABLE tile (id INTEGER PRIMARY KEY, name TEXT, x INTEGER, y INTEGER, height REAL, humidity REAL, vegetation REAL, passable INTEGER, transparent INTEGER)");
             
         } catch (SQLException ex) {
-            //Most likely table already exists
-            System.out.println(ex);
         }
     }
     

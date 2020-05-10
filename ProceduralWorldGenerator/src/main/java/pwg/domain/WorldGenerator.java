@@ -224,13 +224,6 @@ public class WorldGenerator {
         }
     }
     
-    //TODO: These 3 methods can probably still be merged to one noise function.
-    // They are currently separate as you have to use different seed for each or
-    // the height map for each variable will be the same. 
-    // I had them as one method with a type given as parameter but I separated them
-    // as I wanted to use an entirely different noise algorithm for some of them
-    // Have to decide what to do.
-    
     /**
      * Creates a Perlin noise value for given 2 dimensional coordinates
      * and scales that based on the world size.
@@ -255,7 +248,6 @@ public class WorldGenerator {
      * @return 
      */
     private double getHumidityNoise(int x, int y, int worldSize) {
-        //float scale = (float) (20-Math.sqrt(worldSize * 0.1));
         float scale = (float) (30 * worldSize) / (1 + Math.abs(worldSize + 20));
         JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 2).build();

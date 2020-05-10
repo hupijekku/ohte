@@ -8,4 +8,6 @@
 | 21.4. | 4    | Maailman generoimisen algoritmien aloitus |
 | 22.4. | 1    | Testauksen jatkaminen |
 | 28.4. | 2    | JavaDocs ja kommentointi |
-| yht   | 14   | | 
+| 9.5. | 5     | Pathfinding, Dungeons ja hienosäätöä |
+| 10.5. | 8    | Prokrastinaation huipentuma, pysyväistallennus, testaus, dokumentaatio |
+| yht   | 27   | | 

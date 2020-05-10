@@ -12,15 +12,14 @@ limited to, creating maps for game development, creating battle maps for tableto
 (such as D&D) and learning about different procedural generation methods.  
 
 ### Basic Functionality  
-- User can select the type of world to be generated (i.e. World/Terrain/Dungeon)  
-- User can choose from different procedural generation methods for the selected world type  
+- User can select the type of world to be generated (i.e. World/Dungeon)  
 - User can tweak variables associated with the chosen method  
-- User can view the generated map (Simplified JFX drawing?)  
-- User can save the map locally (Xml/Database?)  
+- User can view the generated map   
+- User can save the map locally (Database)  
+- User can load a previously saved map from the database.  
 
 ### Further development   
 - Exporting the map as Xml-document  
 - Exporting the map as .png image  
-- Importing previously PWG-generated Xml maps  
-- Uploading spritesheets for map preview?  
+- Uploading spritesheets for customized map preview  
 

@@ -45,16 +45,25 @@ public class WorldGeneratorTest {
 
     @Test
     public void generationReturnsWorld() {
-        var world = worldGen.generate(WorldType.WORLD, 1, 50, 50, 50, 10);
+        var world = worldGen.generate(WorldType.WORLD, 15, 50, 50, 50, 10);
         assertEquals(true, world instanceof World);
+        var dungeon = worldGen.generate(WorldType.DUNGEON, 15, 0, 0, 0, 10);
+        assertEquals(true, dungeon instanceof World);
     }
     
     @Test
     public void generatedWorldHasTilemapOfCorrectSize() {
-        World world = worldGen.generate(WorldType.WORLD, 10, 50, 50, 50, 10);
+        World world = worldGen.generate(WorldType.WORLD, 15, 50, 50, 50, 10);
         int size = world.getTiles().length;
-        assertEquals(10, size);
+        assertEquals(15, size);
     }
     
+    @Test
+    public void generatorCreatesCorrectTypeOfWorld() {
+        var world = worldGen.generate(WorldType.WORLD, 50, 50, 50, 50, 10);
+        assertEquals(WorldType.WORLD, world.getType());
+        var dungeon = worldGen.generate(WorldType.DUNGEON, 50, 0, 0, 0, 10);
+        assertEquals(WorldType.DUNGEON, dungeon.getType());
+    }
     
 }

@@ -218,8 +218,8 @@ public class PwgUi extends Application {
                 errorBox("Error parsing integer", "World size given is not an integer.");
             }
             WorldDrawer drawer = new WorldDrawer(canvas.getGraphicsContext2D(), canvasSize);
-            if (worldSize > 100 || worldSize < 1) {
-                errorBox("Invalid size", "World size must be between 1 and 100");
+            if (worldSize > 100 || worldSize < 10) {
+                errorBox("Invalid size", "World size must be between 10 and 100");
             } else {
                 WorldGenerator generator = new WorldGenerator();
                 WorldType type = cbWorldType.getValue();
@@ -246,7 +246,11 @@ public class PwgUi extends Application {
                     db.saveWorld(world, name);
                     db.saveTiles(world.getTiles(), name);
                     cbLoad.getItems().add(name);
+                } else {
+                    errorBox("Invalid name", "Name must be unique");
                 }
+            } else {
+                errorBox("Invalid name", "Name must be at least 4 characters long.");
             }
         });
         
@@ -271,6 +275,8 @@ public class PwgUi extends Application {
                 } else if (world.getType() == WorldType.DUNGEON) {
                     drawer.drawDungeon(world);
                 }
+            } else {
+                errorBox("Corrupted world", "Not sure how you managed this, try to delete database file.");
             }
         });
         

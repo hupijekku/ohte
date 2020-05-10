@@ -93,7 +93,6 @@ public class WorldGenerator {
                     }
                 }
             }
-            System.out.print(".");
             iter++;
         }
         for (int i = 0; i < rooms.size() - 1; i++) {

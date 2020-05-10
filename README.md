@@ -7,12 +7,15 @@ Procedural World Generator (PWG) is a Java11/JFX desktop application for procedu
 The application generates a 2d grid map generated with user defined variables that can then be exported or saved into a database for later use.  
 
 ## Documentation  
+[Usage guide](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/kayttoohje.md)  
 [System Requirement Specification (SRS)](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/vaatimusmaarittely.md)  
 [Record of work hours](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/tuntikirjanpito.md)  
 [Architecture](https://github.com/hupijekku/ohte/blob/master/dokumentaatio/arkkitehtuuri.md)  
 
+
 ## Releaset
 [Viikko 5](https://github.com/hupijekku/ohte/releases/tag/viikko5)  
+[loppupalautus](https://github.com/hupijekku/ohte/releases/tag/loppupalautus)  
 
 ## Terminal commands  
 ### Testing

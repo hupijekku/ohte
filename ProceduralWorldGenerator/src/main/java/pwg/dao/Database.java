@@ -5,6 +5,7 @@
  */
 package pwg.dao;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import pwg.domain.Tile;
@@ -36,15 +37,6 @@ public class Database {
         }
     }
     
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection(file);
-        } catch (SQLException ex) {
-            System.out.println(ex);
-            return null;
-        }
-    }
-    
     public World getWorldByName(String name) {
         try {
             PreparedStatement ps = db.prepareStatement("SELECT type, size FROM world WHERE name=?");
@@ -70,8 +62,7 @@ public class Database {
     public ArrayList<String> getWorldNames() {
         ArrayList<String> names = new ArrayList();
         try {    
-            Connection c = getConnection();
-            Statement s = c.createStatement();
+            Statement s = db.createStatement();
             ResultSet rs = s.executeQuery("SELECT name FROM world");
             while (rs.next()) {
                 names.add(rs.getString("name"));

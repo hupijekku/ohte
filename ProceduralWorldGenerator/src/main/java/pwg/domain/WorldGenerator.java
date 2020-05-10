@@ -32,15 +32,16 @@ public class WorldGenerator {
     * @param    humidity            humidity/wetness of the world, amount and size of bodies of water
     * @param    mountainousness     amount of mountains and average height
     * @param    vegetation          amount of vegetation
+    * @param    roomCount           maximum number of rooms in dungeon type world
     * 
     *@return    returns a World object that contains the generated world data.
     */
-    public World generate(WorldType type, int size, int humidity, int mountainousness, int vegetation) {
+    public World generate(WorldType type, int size, int humidity, int mountainousness, int vegetation, int roomCount) {
         World world;
         if (type == WorldType.WORLD) {
             world = generateWorld(size, humidity, mountainousness, vegetation);
         } else {
-            world = generateDungeon(size);
+            world = generateDungeon(size, roomCount);
         }
         return world;
     }
@@ -52,9 +53,10 @@ public class WorldGenerator {
      * Then from each of the rooms, it builds a path to one other room.
      * And finally, it creates doors for every room.
      * @param size      Size of the world to be generated.
+     * @param roomCount Maximum number of rooms to create.
      * @return          Returns a World object containing the dungeon layout.
      */
-    public World generateDungeon(int size) {
+    public World generateDungeon(int size, int roomCount) {
         Tile[][] tilemap = new Tile[size][size];
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -63,7 +65,6 @@ public class WorldGenerator {
                 tilemap[x][y].setY(y);
             }
         }
-        int roomCount = 10;
         int iter = 0;
         ArrayList<Room> rooms = new ArrayList();
         while (iter < roomCount) {
@@ -179,9 +180,7 @@ public class WorldGenerator {
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
                 double noise = getMountainNoise(x, y, world.getSize());
-                
                 noise += Math.abs(noise) * (mount / 100f) + (mount / 100f);
-                noise *= getHumidityNoise(x, y, world.getSize());
                 
                 noise = Math.min(1, noise);
                 tilemap[x][y].setHeight(noise);
@@ -218,8 +217,9 @@ public class WorldGenerator {
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
                 double noise = getVegetationNoise(x, y, world.getSize());
-                noise += Math.abs(noise) * (vegetation / 100f);
-                noise = Math.min(1, noise);
+                noise = Math.abs(noise);
+                noise += (vegetation / 100f);
+                noise -= 0.4f;
                 tilemap[x][y].setVegetation(noise);
             }
         }
@@ -231,7 +231,6 @@ public class WorldGenerator {
     // I had them as one method with a type given as parameter but I separated them
     // as I wanted to use an entirely different noise algorithm for some of them
     // Have to decide what to do.
-    
     
     /**
      * Creates a Perlin noise value for given 2 dimensional coordinates
@@ -274,10 +273,10 @@ public class WorldGenerator {
      * @return 
      */
     private double getVegetationNoise(int x, int y, int worldSize) {
-        float scale = (float) Math.sqrt(worldSize);
+        float scale = (float) (worldSize) / (1 + Math.abs(worldSize + 20));
         JNoise perlinNoise = JNoise.newBuilder()
                 .perlin().setInterpolationType(InterpolationType.COSINE).setSeed(this.seed + 3).build();
         
-        return perlinNoise.getNoise(x / 10, y / 10);
+        return perlinNoise.getNoise(x / scale, y / scale);
     }
 }

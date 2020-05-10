@@ -7,9 +7,9 @@ package pwg.ui;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import pwg.domain.Tile;
 import pwg.domain.World;
-import pwg.domain.WorldType;
 
 public class WorldDrawer {
     
@@ -86,13 +86,31 @@ public class WorldDrawer {
         }
     }
     
+    public void drawVegetation(World world) {
+        Tile[][] tilemap = world.getTiles();
+        int size = world.getSize();
+        int tileSize = canvasSize / size;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                double height = tilemap[x][y].getHeight();
+                double humidity = tilemap[x][y].getHumidity();
+                double vegetation = tilemap[x][y].getVegetation();
+                if (height - humidity > 0 && vegetation > 0.5 && height < 0.45) {
+                    gc.setFill(Color.BROWN);
+                    Font font = gc.getFont();
+                    gc.setFont(new Font(font.getName(), tileSize));
+                    gc.fillText("T", x * tileSize, (y + 1) * (tileSize));
+                }
+            }
+        }
+    }
+    
     public void drawDungeon(World world) {
         Tile[][] tilemap = world.getTiles();
         int size = world.getSize();
         int tileSize = canvasSize / size;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                Color c;
                 if (tilemap[x][y].isPassable() && tilemap[x][y].isTransparent()) {
                     drawRect(x, y, tileSize, Color.GRAY);
                 } else if (tilemap[x][y].isPassable()) {
@@ -106,7 +124,7 @@ public class WorldDrawer {
     
     public void drawRect(int x, int y, int size, Color c) {
         gc.setFill(c);
-        gc.fillRect(x*size, y*size, size, size);
+        gc.fillRect(x * size, y * size, size, size);
     }
     
 }

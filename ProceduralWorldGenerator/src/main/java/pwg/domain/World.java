@@ -53,6 +53,10 @@ public class World {
         return this.tilemap;
     }
     
+    public void setTiles(Tile[][] tilemap) {
+        this.tilemap = tilemap;
+    }
+    
     /**
      * Returns the Tile-object with the given coordinates from the World's tile-map.
      * @param x The x-coordinate of the tile.

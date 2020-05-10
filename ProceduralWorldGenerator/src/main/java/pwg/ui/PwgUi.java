@@ -155,14 +155,19 @@ public class PwgUi extends Application {
                 errorBox("Error parsing integer", "World size given is not an integer.");
             }
             WorldDrawer drawer = new WorldDrawer(canvas.getGraphicsContext2D(), canvasSize);
-            if (worldSize > 100 || worldSize < 0) {
-                errorBox("Invalid size", "World size must be between 0 and 100");
+            if (worldSize > 100 || worldSize < 1) {
+                errorBox("Invalid size", "World size must be between 1 and 100");
             } else {
                 WorldGenerator generator = new WorldGenerator();
-                World world = generator.generate(cbWorldType.getValue(), worldSize, humidity, mountainousness, vegetation);
+                WorldType type = cbWorldType.getValue();
+                World world = generator.generate(type, worldSize, humidity, mountainousness, vegetation);
                 drawer.drawGrid(worldSize);
-                drawer.drawHeightMap(world);
-                drawer.drawWaters(world);
+                if(type == WorldType.WORLD) {
+                    drawer.drawHeightMap(world);
+                    drawer.drawWaters(world);
+                } else if (type == WorldType.DUNGEON) {
+                    drawer.drawDungeon(world);
+                }
             }
         });
         

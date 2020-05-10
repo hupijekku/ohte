@@ -13,14 +13,15 @@ public class WorldGenerator {
     
     
     private int seed = 0;
+    private Random rnd;
     
     /**
      * Empty constructor for the WorldGenerator.
      * Sets a random seed value for this world.
      */
     public WorldGenerator() {
-        Random random = new Random();
-        this.seed = random.nextInt();
+        rnd = new Random();
+        this.seed = rnd.nextInt();
     }
     
     /**
@@ -44,6 +45,15 @@ public class WorldGenerator {
         return world;
     }
     
+    /**
+     * Creates a dungeon-type world.
+     * First the method creates rooms of random size at random locations.
+     * If it can't find enough suitable locations, it skips the rooms.
+     * Then from each of the rooms, it builds a path to one other room.
+     * And finally, it creates doors for every room.
+     * @param size      Size of the world to be generated.
+     * @return          Returns a World object containing the dungeon layout.
+     */
     public World generateDungeon(int size) {
         Tile[][] tilemap = new Tile[size][size];
         for (int x = 0; x < size; x++) {
@@ -54,7 +64,6 @@ public class WorldGenerator {
             }
         }
         int roomCount = 10;
-        Random rnd = new Random();
         int iter = 0;
         ArrayList<Room> rooms = new ArrayList();
         while (iter < roomCount) {
@@ -78,139 +87,67 @@ public class WorldGenerator {
                     generateRoom(tilemap, room);
                 } else {
                     roomCount++;
-                    if(roomCount > 100) break;
+                    if (roomCount > 100) {
+                        break;
+                    }
                 }
             }
             System.out.print(".");
             iter++;
         }
-        for(int i = 0; i < rooms.size() - 1; i++) {
+        for (int i = 0; i < rooms.size() - 1; i++) {
             Room r1 = rooms.get(i);
             Room r2 = rooms.get(i + 1);
-            int r = Math.abs(rnd.nextInt(2));
-            if(r == 0) {
-                generatePathX(tilemap, r1.pivotX, r1.pivotY, r2.pivotX, r2.pivotY);
-            } else {
-                generatePathY(tilemap, r1.pivotX, r1.pivotY, r2.pivotX, r2.pivotY);
-            }
+            generatePath(tilemap, rooms, r1.pivotX, r1.pivotY, r2.pivotX, r2.pivotY);
         }
-        int px1 = rooms.get(0).pivotX;
-        int px2 = rooms.get(rooms.size() - 1).pivotX;
-        int py1 = rooms.get(0).pivotY;
-        int py2 = rooms.get(rooms.size() - 1).pivotY;
-        generatePathY(tilemap, px1, py1, px2, py2);
-        generateDoors(tilemap);
+        generatePath(tilemap, rooms, rooms.get(0).pivotX, rooms.get(rooms.size() - 1).pivotX,
+                     rooms.get(0).pivotY, rooms.get(rooms.size() - 1).pivotY);
+        for (Room r : rooms) {
+            r.generateDoors(tilemap);
+        }
         World world = new World(WorldType.DUNGEON, size, tilemap);
         return world;
     }
     
     public void generateRoom(Tile[][] tilemap, Room r) {
-        for(int i = r.pivotX - (r.width / 2); i < r.pivotX + (r.width / 2); i++) {
-            for(int j = r.pivotY - (r.height / 2); j < r.pivotY + (r.height / 2); j++) {
+        for (int i = r.pivotX - (r.width / 2); i < r.pivotX + (r.width / 2); i++) {
+            for (int j = r.pivotY - (r.height / 2); j < r.pivotY + (r.height / 2); j++) {
                 tilemap[i][j].setPassable(true);
                 tilemap[i][j].setTransparent(true);
             }
         }
     }
     
-    public void generatePathX(Tile[][] tilemap, int x1, int y1, int x2, int y2) {
-        boolean x = false;
-        if (x1 > x2) {
-            for(int i = x2; i <= x1; i++) {
-                tilemap[i][y2].setPassable(true);
-                tilemap[i][y2].setTransparent(true);
-            }
-            x = true;
-        } else {
-            for(int i = x1; i <= x2; i++) {
-                tilemap[i][y1].setPassable(true);
-                tilemap[i][y1].setTransparent(true);
-            }
-        }
-        if (y1 > y2) {
-            for(int i = y2; i < y1; i++) {
-                if(x) {
-                    tilemap[x1][i].setPassable(true);
-                    tilemap[x1][i].setTransparent(true);
-                } else {
-                    tilemap[x2][i].setPassable(true);
-                    tilemap[x2][i].setTransparent(true);
-                }
-                
-            }
-        } else {
-            for(int i = y1; i < y2; i++) {
-                if(x) {
-                    tilemap[x1][i].setPassable(true);
-                    tilemap[x1][i].setTransparent(true);
-                } else {
-                    tilemap[x2][i].setPassable(true);
-                    tilemap[x2][i].setTransparent(true);
-                }
-            }
-        }
-    }
-    
-    public void generatePathY(Tile[][] tilemap, int x1, int y1, int x2, int y2) {
-        boolean y = false;
-        if (y1 > y2) {
-            for(int i = y2; i <= y1; i++) {
-                tilemap[x1][i].setPassable(true);
-                tilemap[x1][i].setTransparent(true);
-            }
-            y = true;
-        } else {
-            for(int i = y1; i <= y2; i++) {
-                tilemap[x2][i].setPassable(true);
-                tilemap[x2][i].setTransparent(true);
-            }
-        }
-        if (x1 > x2) {
-            for(int i = x2; i < x1; i++) {
-                if(y) {
-                    tilemap[i][y2].setPassable(true);
-                    tilemap[i][y2].setTransparent(true);
-                } else {
-                    tilemap[i][y1].setPassable(true);
-                    tilemap[i][y1].setTransparent(true);
-                }
-                
-            }
-        } else {
-            for(int i = x1; i < x2; i++) {
-                if(y) {
-                    tilemap[i][y2].setPassable(true);
-                    tilemap[i][y2].setTransparent(true);
-                } else {
-                    tilemap[i][y1].setPassable(true);
-                    tilemap[i][y1].setTransparent(true);
-                }
-            }
-        }
-    }
-    
-    public void generateDoors(Tile[][] tilemap) {
-        int size = tilemap.length;
-        Random rnd = new Random();
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                if(tilemap[i][j].isPassable()) {
-                    int count = 0;
-                    for(int x = i - 1; x <= i + 1; x++) {
-                        for(int y = j - 1; y <= j + 1; y++) {
-                            if (tilemap[x][y].isPassable()) {
-                                count++;
-                            }
-                        }
-                    }
-                    if (count == 5 && rnd.nextInt(100) < 15) {
-                        tilemap[i][j].setTransparent(false);
+    public void generatePath(Tile[][] tilemap, ArrayList<Room> rooms, int x1, int y1, int x2, int y2) {
+        Pathfinder pf = new Pathfinder(tilemap);
+        ArrayList<Tile> path = pf.path(x1, y1, x2, y2);
+        for (Tile t : path) {
+            if (this.rnd.nextInt(100) < 3) {
+                boolean valid = true;
+                for (Room r : rooms) {
+                    if (r.isInRoom(t.getX(), t.getY())) {
+                        valid = false;
                     }
                 }
+                if (valid) {
+                    t.setTransparent(false);
+                }
+            } else {
+                t.setTransparent(true);
             }
+            t.setPassable(true);
         }
     }
-    
+    /**
+    * Generates a World-type world of given size
+    *
+    * @param    size                length of a side for the generated square shaped world
+    * @param    humidity            humidity/wetness of the world, amount and size of bodies of water
+    * @param    mountainousness     amount of mountains and average height
+    * @param    vegetation          amount of vegetation
+    * 
+    *@return    returns a World object that contains the generated world terrain.
+    */
     public World generateWorld(int size, int humidity, int mountainousness, int vegetation) {
         Tile[][] tilemap = new Tile[size][size];
         for (int x = 0; x < size; x++) {
@@ -228,8 +165,6 @@ public class WorldGenerator {
         world.setHumidity(humidity);
         world.setMountainousness(mountainousness);
         world.setVegetation(vegetation);
-        Pathfinder pf = new Pathfinder(tilemap);
-        pf.path(0, 5, size-1, size-1);
         return world;
     }
     
@@ -244,7 +179,9 @@ public class WorldGenerator {
         for (int x = 0; x < tilemap.length; x++) {
             for (int y = 0; y < tilemap.length; y++) {
                 double noise = getMountainNoise(x, y, world.getSize());
+                
                 noise += Math.abs(noise) * (mount / 100f) + (mount / 100f);
+                noise *= getHumidityNoise(x, y, world.getSize());
                 
                 noise = Math.min(1, noise);
                 tilemap[x][y].setHeight(noise);

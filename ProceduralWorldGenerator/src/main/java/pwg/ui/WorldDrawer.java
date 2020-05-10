@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import pwg.domain.Tile;
 import pwg.domain.World;
+import pwg.domain.WorldType;
 
 public class WorldDrawer {
     
@@ -41,35 +42,29 @@ public class WorldDrawer {
     public void drawHeightMap(World world) {
         Tile[][] tilemap = world.getTiles();
         int size = world.getSize();
-        if (size <= 0) {
-            return;
-        }
         int tileSize = canvasSize / size;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
-                double height = tilemap[x][y].getHeight();
-                height = Math.min(1, Math.max(height, 0));
+                double height = Math.min(1, Math.max(tilemap[x][y].getHeight(), 0));
+                //height = Math.min(1, Math.max(height, 0));
                 double humidity = tilemap[x][y].getHumidity();
-                Color c;
                 if (height < 0 && humidity > 0.4) {
                     // Water
-                    c = Color.BLUE;
+                    drawRect(x, y, tileSize, Color.BLUE);
                 } else {
                     // Land
                     if (height < 0.3) {
-                        c = Color.GREEN;
+                        drawRect(x, y, tileSize, Color.GREEN);
                     } else if (height < 0.6) {
-                        c = Color.DARKGREEN;
+                        drawRect(x, y, tileSize, Color.DARKGREEN);
                     } else if (height < 0.8) {
-                        c = Color.DARKGRAY;
+                        drawRect(x, y, tileSize, Color.DARKGRAY);
                     } else if (height < 1) {
-                        c = Color.GRAY;
+                        drawRect(x, y, tileSize, Color.GRAY);
                     } else {
-                        c = new Color(0.3d, 0.3d, 0.3d, 1);
+                        drawRect(x, y, tileSize, new Color(0.3d, 0.3d, 0.3d, 1));
                     }
                 }
-                gc.setFill(c);
-                gc.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
             }
         }
     }
@@ -77,9 +72,6 @@ public class WorldDrawer {
     public void drawWaters(World world) {
         Tile[][] tilemap = world.getTiles();
         int size = world.getSize();
-        if (size <= 0) {
-            return;
-        }
         int tileSize = canvasSize / size;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -92,6 +84,29 @@ public class WorldDrawer {
                 }
             }
         }
+    }
+    
+    public void drawDungeon(World world) {
+        Tile[][] tilemap = world.getTiles();
+        int size = world.getSize();
+        int tileSize = canvasSize / size;
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                Color c;
+                if (tilemap[x][y].isPassable() && tilemap[x][y].isTransparent()) {
+                    drawRect(x, y, tileSize, Color.GRAY);
+                } else if (tilemap[x][y].isPassable()) {
+                    drawRect(x, y, tileSize, Color.PURPLE);
+                } else {
+                    drawRect(x, y, tileSize, Color.BLACK);
+                }
+            }
+        }
+    }
+    
+    public void drawRect(int x, int y, int size, Color c) {
+        gc.setFill(c);
+        gc.fillRect(x*size, y*size, size, size);
     }
     
 }

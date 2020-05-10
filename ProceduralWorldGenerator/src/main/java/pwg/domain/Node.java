@@ -6,10 +6,11 @@
 package pwg.domain;
 
 /**
- *
+ * Node struct.
+ * Holds current tile, previous tile, and distance to the current tile.
+ * For path-finding purposes. See Pathfinder.java
  * @author emu
  */
-
 public class Node implements Comparable {
     public Tile tile;
     public double distance;
@@ -23,7 +24,7 @@ public class Node implements Comparable {
     @Override
     public int compareTo(Object t) {
         if (t instanceof Node) {
-            return (int)(this.distance - ((Node) t).distance);
+            return (int) (this.distance - ((Node) t).distance);
         } else {
             return 0;
         }

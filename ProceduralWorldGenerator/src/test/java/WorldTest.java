@@ -35,7 +35,7 @@ public class WorldTest {
                 tilemap[i][j] = new Tile();
             }
         }
-        params = new World(WorldType.TERRAIN, 5, tilemap);
+        params = new World(WorldType.WORLD, 5, tilemap);
     }
     
     @BeforeClass
